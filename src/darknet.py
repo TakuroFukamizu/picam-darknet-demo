@@ -45,7 +45,9 @@ class METADATA(Structure):
     _fields_ = [("classes", c_int),
                 ("names", POINTER(c_char_p))]
 
-    
+origin_cwd = os.getcwd()
+os.chdir(DARKNET_PATH)
+print(origin_cwd, '->', DARKNET_PATH)
 
 #lib = CDLL("/home/pjreddie/documents/darknet/libdarknet.so", RTLD_GLOBAL)
 lib = CDLL(os.path.join(DARKNET_PATH, "libdarknet.so"), RTLD_GLOBAL)
@@ -116,6 +118,9 @@ rgbgr_image.argtypes = [IMAGE]
 predict_image = lib.network_predict_image
 predict_image.argtypes = [c_void_p, IMAGE]
 predict_image.restype = POINTER(c_float)
+
+os.chdir(origin_cwd)
+print(DARKNET_PATH, '->', origin_cwd)
 
 def classify(net, meta, im):
     out = predict_image(net, im)
