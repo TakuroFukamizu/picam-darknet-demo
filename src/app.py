@@ -10,7 +10,7 @@ import picamera
 from PIL import Image, ImageDraw, ImageFont
 import datetime
 
-from .configs import ROOT_DIR, DARKNET_PATH
+from configs import ROOT_DIR, DARKNET_PATH
 
 sys.path.append(os.path.join(DARKNET_PATH, 'python'))  # darknet-nnpackのpythonバインディングを読み込む
 from darknet import load_net, load_meta, detect
