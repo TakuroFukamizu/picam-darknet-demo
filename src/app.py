@@ -4,7 +4,7 @@ import sys
 import os
 from time import sleep
 import picamera
-import datetime
+from datetime import datetime
 
 from configs import ROOT_DIR, DARKNET_PATH
 from darknet import load_net, load_meta, detect
@@ -18,7 +18,7 @@ def detect(img_path):
 camera = picamera.PiCamera()
 
 def capture():
-    file_name = "{0:08}.jpg".format(i)
+    file_name = "{}.jpg".format(datetime.now().strftime("%Y%m%d-%H%M%S"))
     file_path = os.path.join(ROOT_DIR, 'captured', file_name)
     with picamera.PiCamera() as camera:
         camera.resolution = (1024, 768)
