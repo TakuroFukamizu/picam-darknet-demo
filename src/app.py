@@ -2,22 +2,16 @@
 
 import sys
 import os
-from os.path import join, dirname
-from envparse import env
-
 from time import sleep
 import picamera
-from PIL import Image, ImageDraw, ImageFont
 import datetime
 
 from configs import ROOT_DIR, DARKNET_PATH
-
-sys.path.append(os.path.join(DARKNET_PATH, 'python'))  # darknet-nnpackのpythonバインディングを読み込む
 from darknet import load_net, load_meta, detect
 
 def detect(img_path):
-    net = load_net("cfg/tiny-yolo.cfg", "tiny-yolo.weights", 0)
-    meta = load_meta("cfg/coco.data")
+    net = load_net(os.path.join(DARKNET_PATH, "cfg/tiny-yolo.cfg"), os.path.join(DARKNET_PATH, "tiny-yolo.weights"), 0)
+    meta = load_meta(os.path.join(DARKNET_PATH, "cfg/coco.data"))
     r = detect(net, meta, img_path)
     return r
 
