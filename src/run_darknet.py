@@ -22,9 +22,12 @@ if __name__ == '__main__':
     repatter_predict_item = re.compile(pattern_predict_item)
 
     ret, stdout, stderr = run_command('./darknet detector test cfg/coco.data cfg/yolov3-tiny.cfg yolov3-tiny.weights data/person.jpg')
+    if len(stdout) > 0:
+        print("## stdout")
+        print(stdout)
     if len(stderr) > 0:
+        print("## stderr")
         print(stderr)
-        exit(1) 
 
     was_predicted = False
     predicted_results = []
