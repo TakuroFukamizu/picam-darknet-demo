@@ -2,22 +2,26 @@
 
 import sys
 import os
+import argparse
 from time import sleep
-import picamera
 from datetime import datetime
 
 from configs import ROOT_DIR, DARKNET_PATH
 from darknet import load_net, load_meta, detect
 
-def detect(img_path):
-    net = load_net(os.path.join(DARKNET_PATH, "cfg/tiny-yolo.cfg"), os.path.join(DARKNET_PATH, "tiny-yolo.weights"), 0)
-    meta = load_meta(os.path.join(DARKNET_PATH, "cfg/coco.data"))
+class YoloConfig:
+    config_file = 'cfg/tiny-yolo.cfg'
+    weights_file = 'tiny-yolo.weights'
+    dataset_file = 'cfg/coco.data'
+
+def detect(config: YoloConfig, img_path: str):
+    net = load_net(config.config_file, config.weights_file, 0)
+    meta = load_meta(config.dataset_file)
     r = detect(net, meta, img_path)
     return r
 
-camera = picamera.PiCamera()
-
 def capture():
+    import picamera
     file_name = "{}.jpg".format(datetime.now().strftime("%Y%m%d-%H%M%S"))
     file_path = os.path.join(ROOT_DIR, 'captured', file_name)
     with picamera.PiCamera() as camera:
@@ -27,8 +31,23 @@ def capture():
         camera.capture(file_path)
     return file_path
 
-file_path = capture()
-resutls = detect(file_path)
-print(resutls)
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--demo_mode", action='store_true', required=False)
+    args, unknown_args = parser.parse_known_args()
+    demo_mode = args.demo_mode
+
+    config = YoloConfig()
+    config.config_file = os.path.join(DARKNET_PATH, "cfg/tiny-yolo.cfg")
+    config.weights_file = os.path.join(DARKNET_PATH, "tiny-yolo.weights")
+    config.dataset_file = os.path.join(DARKNET_PATH, "cfg/coco.data")
+    
+    file_path = None
+    if not demo_mode:
+        file_path = capture()
+    else:
+        file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'my_picture.jpg'))
+    resutls = detect(config, file_path)
+    print(resutls)
 
 
