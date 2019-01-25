@@ -31,7 +31,7 @@ if __name__ == '__main__':
 
     was_predicted = False
     predicted_results = []
-    for line in stdout.split('\n'):
+    for line in str(stdout).split('\n'):
         if not was_predicted:
             result = repatter_predict_finish.match(line)
             if result:
