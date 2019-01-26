@@ -11,11 +11,14 @@ def run_command(cmd: str):
     print('stdout_data', type(stdout_data))
     print('stderr_data', type(stderr_data))
 
-    if len(stdout_data) > 0:
-        stdout_data = str(stdout_data).split('\n')
-    if len(stderr_data) > 0:
-        stderr_data = str(stderr_data).split('\n')
-    
+    def convert_outputs(output: bytes):
+        x = output.decode(encoding='utf-8')
+        x = str(x).split('\n')
+        return x
+
+    stdout_data = convert_outputs(stdout_data)
+    stderr_data = convert_outputs(stderr_data)
+
     return p.returncode, stdout_data, stderr_data
 
 def exec_darknet(image_path: str):
