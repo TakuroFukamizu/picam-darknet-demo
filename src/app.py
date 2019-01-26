@@ -7,8 +7,8 @@ from time import sleep
 from datetime import datetime
 
 from configs import ROOT_DIR, DARKNET_PATH
-from darknet import load_net, load_meta, detect
-from darknet_cli import exec_darknet
+# from darknet import load_net, load_meta, detect
+from .darknet import exec_darknet
 
 
 def detect(config: YoloConfig, img_path: str):
