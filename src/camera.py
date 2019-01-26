@@ -11,7 +11,7 @@ def capture():
     file_path = os.path.join(TEMP_CAPTURED_DIR, file_name)
     with picamera.PiCamera() as camera:
         # camera.resolution = (1024, 768) # XGA
-        camera.resolution = (608, 608) # XGA
+        camera.resolution = (1024, 1024) # XGA
         camera.vflip = True
         camera.hflip = True
         # sleep(5) # it's need
