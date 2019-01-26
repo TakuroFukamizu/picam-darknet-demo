@@ -38,7 +38,7 @@ if __name__ == "__main__":
         if not demo_mode:
             file_path = capture()
         else:
-            file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'my_picture.jpg'))
+            file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'my_picture.jpg'))
         resutls = detect(config, file_path)
         print(resutls)
     else:

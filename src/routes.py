@@ -1,6 +1,8 @@
+# -*- coding: utf-8 -*-
+
 import os
 from bottle import route
-from camera import capture
+from .camera import capture
  
 @app.route('/add')
 def add():

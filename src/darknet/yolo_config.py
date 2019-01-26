@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 
 class YoloConfig:
     config_file = 'cfg/tiny-yolo.cfg'

@@ -1,10 +1,11 @@
+# -*- coding: utf-8 -*-
 
-import picamera
 from time import sleep
 from datetime import datetime
 from configs import TEMP_CAPTURED_DIR
 
 def capture():
+    import picamera
     file_name = "{}.jpg".format(datetime.now().strftime("%Y%m%d-%H%M%S"))
     file_path = os.path.join(TEMP_CAPTURED_DIR, file_name)
     with picamera.PiCamera() as camera:
