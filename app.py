@@ -1,14 +1,15 @@
-# coding: UTF-8
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 import sys
 import os
 import argparse
-from time import sleep
-from datetime import datetime
-
+import bottle
+import routes
 from src.configs import ROOT_DIR, DARKNET_PATH
 # from darknet import load_net, load_meta, detect
 from src.darknet import exec_darknet, YoloConfig
+from src.camera import capture
 
 
 def detect(config: YoloConfig, img_path: str):
@@ -19,35 +20,33 @@ def detect(config: YoloConfig, img_path: str):
     r = exec_darknet(config, img_path)
     return r
 
-def capture():
-    import picamera
-    file_name = "{}.jpg".format(datetime.now().strftime("%Y%m%d-%H%M%S"))
-    file_path = os.path.join(ROOT_DIR, 'captured', file_name)
-    with picamera.PiCamera() as camera:
-        camera.resolution = (1024, 768) # XGA
-        camera.vflip = True
-        camera.CAPTURE_TIMEOUT = 15 # seconds
-        sleep(2)
-        camera.capture(file_path)
-    return file_path
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--demo_mode", action='store_true', required=False)
+    parser.add_argument("--server_mode", action='store_true', required=False)
     args, unknown_args = parser.parse_known_args()
     demo_mode = args.demo_mode
+    server_mode = args.server_mode
 
     config = YoloConfig()
     config.config_file = os.path.join(DARKNET_PATH, "cfg/yolov3-tiny.cfg")
     config.weights_file = os.path.join(DARKNET_PATH, "yolov3-tiny.weights")
     config.dataset_file = os.path.join(DARKNET_PATH, "cfg/coco.data")
     
-    file_path = None
-    if not demo_mode:
-        file_path = capture()
+    if not server_mode:
+        file_path = None
+        if not demo_mode:
+            file_path = capture()
+        else:
+            file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'my_picture.jpg'))
+        resutls = detect(config, file_path)
+        print(resutls)
     else:
-        file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'my_picture.jpg'))
-    resutls = detect(config, file_path)
-    print(resutls)
+        app = routes.app
+        bottle.run(app=app, port=8080, host='0.0.0.0', reloader=True, debug=True)
+
+
+
+ 
 
 
