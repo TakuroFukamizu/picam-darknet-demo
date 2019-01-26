@@ -12,6 +12,6 @@ def capture():
     with picamera.PiCamera() as camera:
         camera.resolution = (1024, 768) # XGA
         camera.vflip = True
-        sleep(2)
+        sleep(5) # it's need
         camera.capture(file_path)
     return file_path
