@@ -3,7 +3,9 @@ import os
 import re
 import subprocess
 import argparse
-from configs import ROOT_DIR, DARKNET_PATH
+
+from src.configs import ROOT_DIR, DARKNET_PATH
+from yolo_config import YoloConfig
 
 def run_command(cmd: str):
     p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -21,7 +23,7 @@ def run_command(cmd: str):
 
     return p.returncode, stdout_data, stderr_data
 
-def exec_darknet(image_path: str):
+def exec_darknet(config: YoloConfig, image_path: str):
     main_workdir = os.getcwd()
 
     os.chdir(DARKNET_PATH)
@@ -33,8 +35,11 @@ def exec_darknet(image_path: str):
     repatter_predict_item = re.compile(pattern_predict_item)
 
     ret, stdout, stderr = run_command(
-        './darknet detector test cfg/coco.data cfg/yolov3-tiny.cfg yolov3-tiny.weights {}'.format(
-            image_path
+        './darknet detector test {dataset} {config} {weights} {image}'.format(
+            dataset=config.dataset_file,
+            config=config.config_file,
+            weights=config.weights_file,
+            image=image_path
         ))
     if len(stdout) > 0:
         print("## stdout")

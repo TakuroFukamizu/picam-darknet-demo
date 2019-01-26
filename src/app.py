@@ -8,16 +8,15 @@ from datetime import datetime
 
 from configs import ROOT_DIR, DARKNET_PATH
 from darknet import load_net, load_meta, detect
+from darknet_cli import exec_darknet
 
-class YoloConfig:
-    config_file = 'cfg/tiny-yolo.cfg'
-    weights_file = 'tiny-yolo.weights'
-    dataset_file = 'cfg/coco.data'
 
 def detect(config: YoloConfig, img_path: str):
-    net = load_net(config.config_file, config.weights_file, 0)
-    meta = load_meta(config.dataset_file)
-    r = detect(net, meta, img_path)
+    # net = load_net(config.config_file, config.weights_file, 0)
+    # meta = load_meta(config.dataset_file)
+    # r = detect(net, meta, img_path)
+    # .so is not working now.
+    r = exec_darknet(config, img_path)
     return r
 
 def capture():
@@ -38,8 +37,8 @@ if __name__ == "__main__":
     demo_mode = args.demo_mode
 
     config = YoloConfig()
-    config.config_file = os.path.join(DARKNET_PATH, "cfg/tiny-yolo.cfg")
-    config.weights_file = os.path.join(DARKNET_PATH, "tiny-yolo.weights")
+    config.config_file = os.path.join(DARKNET_PATH, "cfg/yolov3-tiny.cfg")
+    config.weights_file = os.path.join(DARKNET_PATH, "yolov3-tiny.weights")
     config.dataset_file = os.path.join(DARKNET_PATH, "cfg/coco.data")
     
     file_path = None
