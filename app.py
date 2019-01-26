@@ -24,8 +24,9 @@ def capture():
     file_name = "{}.jpg".format(datetime.now().strftime("%Y%m%d-%H%M%S"))
     file_path = os.path.join(ROOT_DIR, 'captured', file_name)
     with picamera.PiCamera() as camera:
-        camera.resolution = (608, 608)
-        camera.vflip = True 
+        camera.resolution = (1024, 768) # XGA
+        camera.vflip = True
+        camera.CAPTURE_TIMEOUT = 15 # seconds
         sleep(2)
         camera.capture(file_path)
     return file_path
