@@ -5,7 +5,7 @@ import sys
 import os
 import argparse
 import bottle
-import routes
+import src.routes
 from src.configs import ROOT_DIR, DARKNET_PATH
 # from darknet import load_net, load_meta, detect
 from src.darknet import exec_darknet, YoloConfig
