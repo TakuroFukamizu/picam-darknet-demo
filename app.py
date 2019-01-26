@@ -42,7 +42,7 @@ if __name__ == "__main__":
         resutls = detect(config, file_path)
         print(resutls)
     else:
-        bottle.run(app=app, port=80, host='0.0.0.0', reloader=True, debug=True)
+        bottle.run(app=app, port=8080, host='0.0.0.0', reloader=True, debug=True)
 
 
 
