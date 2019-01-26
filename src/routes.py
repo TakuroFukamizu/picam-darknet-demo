@@ -1,14 +1,10 @@
 # -*- coding: utf-8 -*-
 
 import os
-from bottle import Bottle
+from bottle import Bottle, HTTPResponse
 from .camera import capture
 
 app = Bottle()
- 
-@app.route('/add')
-def add():
-    return ("<h3>Hello World</h3>")
 
 @app.route('/api/v1/get_preview', method='GET')
 def api_ger_preview():
