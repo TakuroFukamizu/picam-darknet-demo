@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
 import os
-from bottle import route
+from bottle import Bottle
 from .camera import capture
+
+app = Bottle()
  
 @app.route('/add')
 def add():

@@ -5,7 +5,7 @@ import sys
 import os
 import argparse
 import bottle
-import src.routes
+from src.routes import app
 from src.configs import ROOT_DIR, DARKNET_PATH
 # from darknet import load_net, load_meta, detect
 from src.darknet import exec_darknet, YoloConfig
@@ -42,7 +42,6 @@ if __name__ == "__main__":
         resutls = detect(config, file_path)
         print(resutls)
     else:
-        app = routes.app
         bottle.run(app=app, port=8080, host='0.0.0.0', reloader=True, debug=True)
 
 

@@ -2,7 +2,7 @@
 
 from time import sleep
 from datetime import datetime
-from configs import TEMP_CAPTURED_DIR
+from .configs import TEMP_CAPTURED_DIR
 
 def capture():
     import picamera
