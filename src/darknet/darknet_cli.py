@@ -28,6 +28,10 @@ def exec_darknet(config: YoloConfig, image_path: str):
 
     os.chdir(DARKNET_PATH)
 
+    pattern_error_cannot_load_image = 'Cannot load image "([\w/-]+)"' #'Cannot load image "/home/pi/my_picture.jpg"'
+    pattern_stb_reason = 'STB Reason: (.+)'  #"STB Reason: can't fopen"
+    repatter_stb_reason = re.compile(pattern_predict_finish)
+
     pattern_predict_finish = '[\w/-]+.jpg: Predicted in ([0-9.]+) seconds.'
     repatter_predict_finish = re.compile(pattern_predict_finish)
 
@@ -47,6 +51,13 @@ def exec_darknet(config: YoloConfig, image_path: str):
     if len(stderr) > 0:
         print("## stderr")
         print(stderr)
+    
+    # エラーチェック
+    for line in stderr:
+        result = repatter_stb_reason.match(line)
+        if result:
+            reason = result.group(1)
+            raise Exception(reason)
 
     was_predicted = False
     predicted_results = []
