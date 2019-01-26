@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
-from bottle import Bottle, HTTPResponse
+from bottle import Bottle, HTTPResponse, response
 from .camera import capture
 
 app = Bottle()
