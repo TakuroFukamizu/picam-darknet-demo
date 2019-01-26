@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import os
 from time import sleep
 from datetime import datetime
 from .configs import TEMP_CAPTURED_DIR
