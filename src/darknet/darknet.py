@@ -3,7 +3,7 @@ import math
 import random
 
 import os
-from configs import DARKNET_PATH
+from src.configs import DARKNET_PATH
 
 def sample(probs):
     s = sum(probs)

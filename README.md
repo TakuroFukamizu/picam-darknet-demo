@@ -24,3 +24,8 @@ DARKNET_PATH=/home/pi/darknet-nnpack
 ```
 
 
+## test
+
+```sh
+python3 src/app.py --demo_mode
+```
