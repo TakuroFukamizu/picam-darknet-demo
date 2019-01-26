@@ -5,7 +5,7 @@ import subprocess
 import argparse
 
 from src.configs import ROOT_DIR, DARKNET_PATH
-from yolo_config import YoloConfig
+from .yolo_config import YoloConfig
 
 def run_command(cmd: str):
     p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)

@@ -6,9 +6,9 @@ import argparse
 from time import sleep
 from datetime import datetime
 
-from configs import ROOT_DIR, DARKNET_PATH
+from src.configs import ROOT_DIR, DARKNET_PATH
 # from darknet import load_net, load_meta, detect
-from darknet import exec_darknet
+from src.darknet import exec_darknet, YoloConfig
 
 
 def detect(config: YoloConfig, img_path: str):
