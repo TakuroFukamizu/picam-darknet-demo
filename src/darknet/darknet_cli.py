@@ -46,12 +46,6 @@ def exec_darknet(config: YoloConfig, image_path: str):
             weights=config.weights_file,
             image=image_path
         ))
-    if len(stdout) > 0:
-        print("## stdout")
-        print(stdout)
-    if len(stderr) > 0:
-        print("## stderr")
-        print(stderr)
     
     # エラーチェック
     for line in stderr:
@@ -60,24 +54,26 @@ def exec_darknet(config: YoloConfig, image_path: str):
             reason = result.group(1)
             raise Exception(reason)
 
+    # 認識結果の確認
     was_predicted = False
     predicted_results = []
-    for line in stdout:
-        if not was_predicted:
-            result = repatter_predict_finish.match(line)
-            if result:
-                elapsed_time = float(result.group(1))
-                fps = 1.0 / elapsed_time
-                print(result.group(), '{} FPS'.format(fps))
-                was_predicted = True
-        else:  # 認識結果
-            result = repatter_predict_item.match(line)
-            if result:
-                class_label = result.group(1)
-                prod = int(result.group(2)) / 100
-                predicted_results.append((class_label, prod))
-            else:
-                print('invalid line', line)
+    if len(stdout) > 0:
+        for line in stdout:
+            if not was_predicted:
+                result = repatter_predict_finish.match(line)
+                if result:
+                    elapsed_time = float(result.group(1))
+                    fps = 1.0 / elapsed_time
+                    print(result.group(), '{} FPS'.format(fps))
+                    was_predicted = True
+            else:  # 認識結果
+                result = repatter_predict_item.match(line)
+                if result:
+                    class_label = result.group(1)
+                    prod = int(result.group(2)) / 100
+                    predicted_results.append((class_label, prod))
+                else:
+                    print('invalid line', line)
     return predicted_results
 
 if __name__ == '__main__':
