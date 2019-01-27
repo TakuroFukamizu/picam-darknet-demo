@@ -41,7 +41,7 @@ def api_ger_preview():
         print(ex)
         return HTTPResponse(status=500)
 
-@route('/')
+@app.route('/')
 def index():
     return static_file('index.html', root=os.path.join(ROOT_DIR, 'dist'))
 
