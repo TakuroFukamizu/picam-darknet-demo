@@ -12,6 +12,16 @@
 
 ## prep
 
+### install node.js and tools
+
+- https://kokensha.xyz/raspberry-pi/best-way-to-install-nodejs-to-raspberrypi/
+
+#### install vue cli 3
+
+```sh
+$ npm install @vue/cli -g
+```
+
 ### install darknet-nnpack
 
 

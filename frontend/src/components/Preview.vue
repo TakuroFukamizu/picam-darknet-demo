@@ -35,15 +35,25 @@ export default class Preview extends Vue {
 
     private handleClick() {
         // const api = "/api/v1/get_preview";
-        const api = 'http://devraspi02.local:8080/api/v1/get_preview';
+        const api = 'http://devraspi02.local:8080/api/v1/get_preview?mode=base64';
         this.axios.get(api).then((response) => {
             console.log(response, typeof(response.data));
             // const file = new Blob([response.data], {type: 'image/jpeg'});
-            const file = new Blob([response.data], {type: response.headers['content-type']});
-            console.log(file);
-            this.imageSrc = URL.createObjectURL(file);
+            // const file = new Blob([response.data], {type: response.headers['content-type']});
+            // console.log(file);
+            // this.imageSrc = URL.createObjectURL(file);
+            this.imageSrc = 'data:image/jpg;base64,' + response.data;
         });
     }
 }
 </script>
+
+<style scoped>
+img {
+    width:auto;
+    height:auto;
+    max-width:100%;
+    max-height:100%;
+}
+</style>
 
