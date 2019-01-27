@@ -3,7 +3,7 @@
 import os
 import base64
 from io import BytesIO
-from bottle import Bottle, HTTPResponse, response
+from bottle import Bottle, HTTPResponse, response, request
 from PIL import Image
 from .camera import capture
 
