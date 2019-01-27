@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 envparse = "*"
 bottle = "*"
+pillow = "*"
 
 [dev-packages]
 
