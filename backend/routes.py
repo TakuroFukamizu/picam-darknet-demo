@@ -3,7 +3,7 @@
 import os
 import base64
 from io import BytesIO
-from bottle import Bottle, HTTPResponse, response, request
+from bottle import Bottle, HTTPResponse, response, request, static_file
 from PIL import Image
 from .camera import capture
 from backend.configs import ROOT_DIR
@@ -40,6 +40,10 @@ def api_ger_preview():
     except Exception as ex:
         print(ex)
         return HTTPResponse(status=500)
+
+@route('/')
+def index():
+    return static_file('index.html', root=os.path.join(ROOT_DIR, 'dist'))
 
 # serve frontend files
 @app.route("/<filepath:path>", name="static_file")
