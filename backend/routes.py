@@ -6,6 +6,7 @@ from io import BytesIO
 from bottle import Bottle, HTTPResponse, response, request
 from PIL import Image
 from .camera import capture
+from backend.configs import ROOT_DIR
 
 app = Bottle()
 
@@ -15,7 +16,6 @@ def after_request():
     response.headers['Access-Control-Allow-Origin'] = '*'
     response.headers['Access-Control-Allow-Methods'] = 'GET, POST'
     response.headers['Access-Control-Allow-Headers'] = 'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token'
-
 
 @app.route('/api/v1/get_preview', method='GET')
 def api_ger_preview():
@@ -40,3 +40,8 @@ def api_ger_preview():
     except Exception as ex:
         print(ex)
         return HTTPResponse(status=500)
+
+# serve frontend files
+@app.route("/<filepath:path>", name="static_file")
+def static(filepath):   
+    return static_file(filepath, root=os.path.join(ROOT_DIR, 'dist'))
