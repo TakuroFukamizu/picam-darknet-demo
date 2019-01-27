@@ -45,6 +45,10 @@ python3 app.py --demo_mode
 ### standalone mode
 
 ```sh
+$ cd frontend
+$ npm i
+$ npm run build
+$ cd ../
 $ python3 app.py --server_mode
 $ chromium-browser --noerrdialogs --kiosk --incognito http://localhost:8080/
 ```
