@@ -6,6 +6,14 @@ from .camera import capture
 
 app = Bottle()
 
+@app.hook('after_request')
+def after_request():
+    # CORS settings
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST'
+    response.headers['Access-Control-Allow-Headers'] = 'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token'
+
+
 @app.route('/api/v1/get_preview', method='GET')
 def api_ger_preview():
     try:

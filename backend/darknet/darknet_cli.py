@@ -5,7 +5,7 @@ import re
 import subprocess
 import argparse
 
-from src.configs import ROOT_DIR, DARKNET_PATH
+from backend.configs import ROOT_DIR, DARKNET_PATH
 from .yolo_config import YoloConfig
 
 def run_command(cmd: str):

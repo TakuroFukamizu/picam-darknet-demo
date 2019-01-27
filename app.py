@@ -5,11 +5,11 @@ import sys
 import os
 import argparse
 import bottle
-from src.routes import app
-from src.configs import ROOT_DIR, DARKNET_PATH
+from backend.routes import app
+from backend.configs import ROOT_DIR, DARKNET_PATH
 # from darknet import load_net, load_meta, detect
-from src.darknet import exec_darknet, YoloConfig
-from src.camera import capture
+from backend.darknet import exec_darknet, YoloConfig
+from backend.camera import capture
 
 
 def detect(config: YoloConfig, img_path: str):

@@ -27,5 +27,14 @@ DARKNET_PATH=/home/pi/darknet-nnpack
 ## test
 
 ```sh
-python3 src/app.py --demo_mode
+python3 app.py --demo_mode
+```
+
+## run
+
+### standalone mode
+
+```sh
+$ python3 app.py --server_mode
+$ chromium-browser --noerrdialogs --kiosk --incognito http://localhost:8080/
 ```

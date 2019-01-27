@@ -5,7 +5,7 @@ import math
 import random
 
 import os
-from src.configs import DARKNET_PATH
+from backend.configs import DARKNET_PATH
 
 def sample(probs):
     s = sum(probs)
