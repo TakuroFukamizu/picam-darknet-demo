@@ -6,6 +6,8 @@
             </v-flex>
             <v-flex xs4>
                 <v-btn color="success" v-on:click="handleClick">Preview</v-btn>
+                <br>
+                <v-btn color="success" v-on:click="handleDetectClick">Detect</v-btn>
             </v-flex>
         </v-layout>
     </v-container>
@@ -45,6 +47,17 @@ export default class Preview extends Vue {
             this.imageSrc = 'data:image/jpg;base64,' + response.data;
         });
     }
+
+    private handleDetectClick() {
+        // const api = "/api/v1/get_preview";
+        const api = 'http://devraspi02.local:8080/api/v1/detect_people';
+        this.axios.get(api).then((response) => {
+            console.log(response, typeof(response.data));
+            this.imageSrc = 'data:image/jpg;base64,' + response.data['result_image'];
+        });
+    }
+
+    
 }
 </script>
 

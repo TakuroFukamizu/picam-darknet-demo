@@ -77,7 +77,7 @@ def api_detect_people():
         body = {
             'results': results,
             'result_image': result_image_b64,
-            'result_image': origin_image_b64,
+            'origin_image': origin_image_b64,
         }
         
         r = HTTPResponse(status=200, body=body)
