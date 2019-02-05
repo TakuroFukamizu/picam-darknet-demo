@@ -32,8 +32,11 @@ class Detector:
         if not os.path.exists(file_path):
             raise Exception('{} is not found'.format(file_path))
         results = self._detect(file_path)
-        result_image = self._get_detect_image()
         origin_image = Image.open(file_path)
+        if len(results) > 0:
+            result_image = self._get_detect_image()
+        else:
+            result_image = origin_image
         os.remove(file_path)
         return results, result_image, origin_image
 
