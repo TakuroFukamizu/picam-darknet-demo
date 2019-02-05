@@ -28,7 +28,7 @@ class Detector:
     
     def run(self):
         file_path = capture()
-        results = self._detect(self._yolo_config, file_path)
+        results = self._detect(file_path)
         result_image = self._get_detect_image()
         origin_image = Image.open(file_path)
         os.remove(file_path)
