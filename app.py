@@ -6,7 +6,7 @@ import os
 import argparse
 import bottle
 from backend.routes import app
-from backend.configs import ROOT_DIR, DARKNET_PATH
+from backend.configs import ROOT_DIR, DARKNET_PATH, DARKNET_CONFIG_FILE, DARKNET_WEIGHT_FILE, DARKNET_DATASET_FILE
 # from darknet import load_net, load_meta, detect
 from backend.darknet import exec_darknet, YoloConfig
 from backend.camera import capture
@@ -29,9 +29,9 @@ if __name__ == "__main__":
     server_mode = args.server_mode
 
     config = YoloConfig()
-    config.config_file = os.path.join(DARKNET_PATH, "cfg/yolov3-tiny.cfg")
-    config.weights_file = os.path.join(DARKNET_PATH, "yolov3-tiny.weights")
-    config.dataset_file = os.path.join(DARKNET_PATH, "cfg/coco.data")
+    config.config_file = DARKNET_CONFIG_FILE
+    config.weights_file = DARKNET_WEIGHT_FILE
+    config.dataset_file = DARKNET_DATASET_FILE
     
     if not server_mode:
         file_path = None
