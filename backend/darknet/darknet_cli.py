@@ -54,9 +54,10 @@ def exec_darknet(config: YoloConfig, image_path: str):
             dataset=config.dataset_file,
             config=config.config_file,
             weights=config.weights_file,
-            image=image_path,
-            cwd=DARKNET_PATH
-        ))
+            image=image_path
+        ),
+        cwd=DARKNET_PATH
+        )
     
     # エラーチェック
     for line in stderr:
