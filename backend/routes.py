@@ -66,23 +66,26 @@ def api_get_preview():
 @app.route('/api/v1/detect_people', method='GET')
 def api_detect_people():
     global config
-    print(config)
     detector = Detector(config)
-    print(detector)
-    results, result_image, origin_image = detector.run()
-    print(results, result_image, origin_image)
-    result_image_b64 = image_to_base64(result_image, format="JPEG")
-    origin_image_b64 = image_to_base64(origin_image, format="JPEG")
+    try:
+        results, result_image, origin_image = detector.run()
+        print(results, result_image, origin_image)
+        result_image_b64 = image_to_base64(result_image, format="JPEG")
+        origin_image_b64 = image_to_base64(origin_image, format="JPEG")
 
-    body = {
-        detects: detector,
-        result_image: result_image_b64,
-        result_image: origin_image_b64
-    }
-    
-    r = HTTPResponse(status=200, body=body)
-    r.set_header("Content-Type", "application/json")
-    return r
+        body = {
+            detects: detector,
+            result_image: result_image_b64,
+            result_image: origin_image_b64
+        }
+        
+        r = HTTPResponse(status=200, body=body)
+        r.set_header("Content-Type", "application/json")
+        return r
+    except Exception as ex:
+        print(ex)
+        return HTTPResponse(status=500)
+
 
 @app.route('/')
 def index():
