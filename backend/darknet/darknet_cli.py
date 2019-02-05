@@ -9,7 +9,8 @@ from backend.configs import ROOT_DIR, DARKNET_PATH
 from .yolo_config import YoloConfig
 
 def run_command(cmd: str):
-    p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    # p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    p = subprocess.Popen(cmd, shell=False, bufsize=-1, close_fds=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout_data, stderr_data = None, None
     try:
         stdout_data, stderr_data = p.communicate(timeout=30)
