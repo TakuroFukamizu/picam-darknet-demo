@@ -67,6 +67,7 @@ def exec_darknet(config: YoloConfig, image_path: str):
     #         weights=config.weights_file,
     #         image=image_path
     #     ))
+    print(os.environ['PATH'])
     ret, stdout, stderr = run_command(
         'darknet detector test {dataset} {config} {weights} {image}'.format(
             dataset=config.dataset_file,
