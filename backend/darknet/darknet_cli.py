@@ -37,6 +37,7 @@ def exec_darknet(config: YoloConfig, image_path: str):
     main_workdir = os.getcwd()
 
     os.chdir(DARKNET_PATH)
+    print('currend dir:', os.getcwd())
 
     pattern_error_cannot_load_image = 'Cannot load image "([\w/-]+)"' #'Cannot load image "/home/pi/my_picture.jpg"'
     pattern_stb_reason = 'STB Reason: (.+)'  #"STB Reason: can't fopen"
