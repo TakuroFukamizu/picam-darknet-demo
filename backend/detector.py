@@ -21,7 +21,7 @@ class Detector:
         r = exec_darknet(self._yolo_config, img_path)
         return r
     def _get_detect_image(self):
-        result_image_path = os.path.join(DARKNET_PATH, 'detection.jpg')
+        result_image_path = os.path.join(DARKNET_PATH, 'predictions.jpg')
         result_image = Image.open(result_image_path)
         # os.remove(result_image_path)
         return result_image
