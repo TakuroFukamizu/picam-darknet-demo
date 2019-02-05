@@ -29,6 +29,8 @@ class Detector:
     def run(self):
         file_path = capture()
         print(file_path)
+        if not os.path.exists(file_path):
+            raise Exception('{} is not found'.format(file_path))
         results = self._detect(file_path)
         result_image = self._get_detect_image()
         origin_image = Image.open(file_path)
