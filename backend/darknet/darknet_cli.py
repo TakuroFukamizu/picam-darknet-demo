@@ -59,14 +59,22 @@ def exec_darknet(config: YoloConfig, image_path: str):
     #     ),
     #     cwd=DARKNET_PATH
     #     )
+    # ret, stdout, stderr = run_command(
+    #     '{base}/darknet detector test {dataset} {config} {weights} {image}'.format(
+    #         base=DARKNET_PATH,
+    #         dataset=config.dataset_file,
+    #         config=config.config_file,
+    #         weights=config.weights_file,
+    #         image=image_path
+    #     ))
     ret, stdout, stderr = run_command(
-        '{base}/darknet detector test {dataset} {config} {weights} {image}'.format(
-            base=DARKNET_PATH,
+        'darknet detector test {dataset} {config} {weights} {image}'.format(
             dataset=config.dataset_file,
             config=config.config_file,
             weights=config.weights_file,
             image=image_path
         ))
+    
     
     # エラーチェック
     for line in stderr:
