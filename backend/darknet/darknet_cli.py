@@ -8,7 +8,7 @@ import argparse
 from backend.configs import ROOT_DIR, DARKNET_PATH
 from .yolo_config import YoloConfig
 
-def run_command(cmd: str):
+def run_command(cmd: list):
     # p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     # p = subprocess.Popen(cmd, shell=False, bufsize=-1, close_fds=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=cwd)
     p = subprocess.Popen(cmd, shell=False, bufsize=-1, close_fds=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -74,13 +74,7 @@ def exec_darknet(config: YoloConfig, image_path: str):
     print(config.config_file, os.path.exists(config.config_file))
     print(config.weights_file, os.path.exists(config.weights_file))
     print(image_path, os.path.exists(image_path))
-    ret, stdout, stderr = run_command(
-        'darknet detector test {dataset} {config} {weights} {image}'.format(
-            dataset=config.dataset_file,
-            config=config.config_file,
-            weights=config.weights_file,
-            image=image_path
-        ))
+    ret, stdout, stderr = run_command(['./darknet', 'detector', 'test', config.dataset_file, config.config_file, config.weights_file, image_path])
     
     
     # エラーチェック
