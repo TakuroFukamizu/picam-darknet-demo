@@ -7,6 +7,7 @@ from bottle import Bottle, HTTPResponse, response, request, static_file
 from PIL import Image
 from .camera import capture
 from backend.configs import ROOT_DIR
+from backend.configs import DARKNET_PATH, DARKNET_CONFIG_FILE, DARKNET_WEIGHT_FILE, DARKNET_DATASET_FILE
 from .detector import Detector
 
 
@@ -16,6 +17,11 @@ def image_to_base64(image: Image, format="JPEG"):
     content = base64.b64encode(buffered.getvalue())
     return content
 
+config = YoloConfig()
+config.config_file = DARKNET_CONFIG_FILE
+config.weights_file = DARKNET_WEIGHT_FILE
+config.dataset_file = DARKNET_DATASET_FILE
+    
 
 app = Bottle()
 
@@ -58,7 +64,8 @@ def api_get_preview():
 
 @app.route('/api/v1/detect_people', method='GET')
 def api_detect_people():
-    detector = Detector(None)
+    global config
+    detector = Detector(config)
     results, result_image, origin_image = detector.run()
     result_image_b64 = image_to_base64(result_image, format="JPEG")
     origin_image_b64 = image_to_base64(origin_image, format="JPEG")
