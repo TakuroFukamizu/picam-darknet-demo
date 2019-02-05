@@ -69,7 +69,7 @@ def exec_darknet(config: YoloConfig, image_path: str):
     #     ))
     os.environ['PATH'] = '{}:{}'.format(DARKNET_PATH, os.environ['PATH'])
     print(os.environ['PATH'])
-    print(os.path.exists(DARKNET_PATH, 'darknet'), os.path.exists(DARKNET_PATH, 'darknet'))
+    print(os.path.join(DARKNET_PATH, 'darknet'), os.path.exists(os.path.join(DARKNET_PATH, 'darknet')))
     print(config.dataset_file, os.path.exists(config.dataset_file))
     print(config.config_file, os.path.exists(config.config_file))
     print(config.weights_file, os.path.exists(config.weights_file))
