@@ -10,7 +10,15 @@ from .yolo_config import YoloConfig
 
 def run_command(cmd: str):
     p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    stdout_data, stderr_data = p.communicate(timeout=30)
+    stdout_data, stderr_data = None, None
+    try:
+        stdout_data, stderr_data = p.communicate(timeout=30)
+    except KeyboardInterrupt:
+        print('Ctrl C')
+        print(stdout_data, stderr_data)
+    except Exception as ex:
+        raise ex
+    # stdout_data, stderr_data = p.communicate(timeout=30)
     print('stdout_data', type(stdout_data))
     print('stderr_data', type(stderr_data))
 
