@@ -67,6 +67,7 @@ def api_get_preview():
 def api_detect_people():
     global config
     detector = Detector(config)
+    results, result_image, origin_image = None, None, None
     try:
         results, result_image, origin_image = detector.run()
         print(results, result_image, origin_image)
@@ -82,6 +83,10 @@ def api_detect_people():
         r = HTTPResponse(status=200, body=body)
         r.set_header("Content-Type", "application/json")
         return r
+    except KeyboardInterrupt:
+        print('Ctrl C')
+        print(results, result_image, origin_image)
+        return HTTPResponse(status=500)
     except Exception as ex:
         print(ex)
         return HTTPResponse(status=500)
