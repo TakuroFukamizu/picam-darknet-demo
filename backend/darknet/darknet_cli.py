@@ -11,8 +11,8 @@ from .yolo_config import YoloConfig
 def run_command(cmd: str):
     p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout_data, stderr_data = p.communicate(timeout=30)
-    print('stdout_data', type(stdout_data))
-    print('stderr_data', type(stderr_data))
+    # print('stdout_data', type(stdout_data))
+    # print('stderr_data', type(stderr_data))
 
     def convert_outputs(output: bytes):
         x = output.decode(encoding='utf-8')
