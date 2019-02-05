@@ -7,6 +7,15 @@ from bottle import Bottle, HTTPResponse, response, request, static_file
 from PIL import Image
 from .camera import capture
 from backend.configs import ROOT_DIR
+from .detector import Detector
+
+
+def image_to_base64(image: Image, format="JPEG"):
+    buffered = BytesIO()
+    image.save(buffered, format=format)
+    content = base64.b64encode(buffered.getvalue())
+    return content
+
 
 app = Bottle()
 
@@ -18,28 +27,51 @@ def after_request():
     response.headers['Access-Control-Allow-Headers'] = 'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token'
 
 @app.route('/api/v1/get_preview', method='GET')
-def api_ger_preview():
+def api_get_preview():
     mode = request.query.get('mode') # file, base64
     mode = 'file' if mode is None else mode
+    image_path = None
     try:
         image_path = capture()
-        content = None
+        r = None
         if mode == 'base64':
-            response.content_type = 'text/plain'
             image = Image.open(image_path)
-            buffered = BytesIO()
-            image.save(buffered, format="JPEG")
-            content = base64.b64encode(buffered.getvalue())
+            body = image_to_base64(image, format="JPEG")
+
+            r = HTTPResponse(status=200, body=body)
+            r.set_header('Content-Type', 'text/plain')
         else:
-            response.content_type = 'image/jpeg'
+            body = None
             with open(image_path, 'rb') as fh:
-                content = fh.read()
-        os.remove(image_path)
-        response.set_header('Content-Length', str(len(content)))
-        return content
+                body = fh.read()
+            
+            r = HTTPResponse(status=200, body=body)
+            r.set_header('Content-Type', 'image/jpeg')
+        # response.set_header('Content-Length', str(len(content)))
+        return r
     except Exception as ex:
         print(ex)
         return HTTPResponse(status=500)
+    finally:
+        if image_path and os.path.exists(image_path):
+            os.remove(image_path)
+
+@app.route('/api/v1/detect_people', method='GET')
+def api_detect_people():
+    detector = Detector(None)
+    results, result_image, origin_image = detector.run()
+    result_image_b64 = image_to_base64(result_image, format="JPEG")
+    origin_image_b64 = image_to_base64(origin_image, format="JPEG")
+
+    body = {
+        detects: detector,
+        result_image: result_image_b64,
+        result_image: origin_image_b64
+    }
+    
+    r = HTTPResponse(status=200, body=body)
+    r.set_header("Content-Type", "application/json")
+    return r
 
 @app.route('/')
 def index():
