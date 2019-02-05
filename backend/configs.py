@@ -12,3 +12,17 @@ TEMP_CAPTURED_DIR = os.path.join(ROOT_DIR, 'captured')
 env.read_envfile(os.path.join(ROOT_DIR, '.env'))
 DARKNET_PATH = env.str("DARKNET_PATH", default='')
 
+USER_DARKNET_LABEL_FILE = env.str("USER_DARKNET_LABEL_FILE", default='')
+USER_DARKNET_CONFIG_FILE = env.str("USER_DARKNET_CONFIG_FILE", default='')
+USER_DARKNET_WEIGHT_FILE = env.str("USER_DARKNET_WEIGHT_FILE", default='')
+
+if len(DARKNET_LABEL_FILE) > 0 and len(DARKNET_CONFIG_FILE) > 0 and len(DARKNET_WEIGHT_FILE):
+    USER_DARKNET_LABEL_FILE = os.path.join(ROOT_DIR, USER_DARKNET_LABEL_FILE)
+    USER_DARKNET_CONFIG_FILE = os.path.join(ROOT_DIR, USER_DARKNET_CONFIG_FILE)
+    USER_DARKNET_WEIGHT_FILE = os.path.join(ROOT_DIR, USER_DARKNET_WEIGHT_FILE)
+
+
+DARKNET_LABEL_FILE = os.path.join(DARKNET_PATH, "manacamera/labels.txt")
+DARKNET_CONFIG_FILE = os.path.join(DARKNET_PATH, "manacamera/yolo3-tiny.cfg")
+DARKNET_WEIGHT_FILE = os.path.join(DARKNET_PATH, "manacamera/latest.weights")
+DARKNET_DATASET_FILE = os.path.join(DARKNET_PATH, "manacamera/dataset.txt")
