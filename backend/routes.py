@@ -75,7 +75,7 @@ def api_detect_people():
         origin_image_b64 = image_to_base64(origin_image, format="JPEG")
 
         body = {
-            'detects': detector,
+            'results': results,
             'result_image': result_image_b64,
             'result_image': origin_image_b64,
         }
