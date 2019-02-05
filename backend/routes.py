@@ -6,9 +6,10 @@ from io import BytesIO
 from bottle import Bottle, HTTPResponse, response, request, static_file
 from PIL import Image
 from .camera import capture
-from backend.configs import ROOT_DIR
-from backend.configs import DARKNET_PATH, DARKNET_CONFIG_FILE, DARKNET_WEIGHT_FILE, DARKNET_DATASET_FILE
+from .configs import ROOT_DIR
+from .configs import DARKNET_PATH, DARKNET_CONFIG_FILE, DARKNET_WEIGHT_FILE, DARKNET_DATASET_FILE
 from .detector import Detector
+from .darknet import YoloConfig
 
 
 def image_to_base64(image: Image, format="JPEG"):
