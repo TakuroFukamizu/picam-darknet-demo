@@ -17,5 +17,5 @@ def capture():
         # sleep(5) # it's need
         sleep(1)
         camera.capture(file_path)
-    sleep(2)
+    sleep(0.5)
     return file_path
