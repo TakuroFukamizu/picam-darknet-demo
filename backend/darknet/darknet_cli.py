@@ -85,7 +85,6 @@ def exec_darknet(config: YoloConfig, image_path: str):
             line = line.strip()
             if len(line) == 0:
                 continue
-            if len(line)
             if not was_predicted:
                 result = repatter_predict_finish.match(line)
                 if result:
