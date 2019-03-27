@@ -82,6 +82,10 @@ def exec_darknet(config: YoloConfig, image_path: str):
     predicted_results = []
     if len(stdout) > 0:
         for line in stdout:
+            line = line.strip()
+            if len(line) == 0:
+                continue
+            if len(line)
             if not was_predicted:
                 result = repatter_predict_finish.match(line)
                 if result:
@@ -96,7 +100,7 @@ def exec_darknet(config: YoloConfig, image_path: str):
                     prod = int(result.group(2)) / 100
                     predicted_results.append((class_label, prod))
                 else:
-                    print('invalid line', line)
+                    print('invalid line "', line, '"')
     return predicted_results
 
 if __name__ == '__main__':
