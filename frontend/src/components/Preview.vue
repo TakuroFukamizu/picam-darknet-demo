@@ -2,7 +2,14 @@
     <v-container grid-list-md text-xs-center>
         <v-layout row wrap>
             <v-flex xs8>
-                <img :src="imageSrc">
+                <v-progress-circular
+                    :size="70"
+                    :width="7"
+                    v-if="isLoading"
+                    color="purple"
+                    indeterminate
+                    ></v-progress-circular>
+                <img :src="imageSrc" v-else>
             </v-flex>
             <v-flex xs4>
                 <v-btn color="success" v-on:click="handleClick">Preview</v-btn>
@@ -34,11 +41,14 @@ export default class Preview extends Vue {
 //   @Prop() private value!: number
 //   @Mutation('increment') increment!: () => void
     private imageSrc: string = 'http://devraspi02.local:8080/api/v1/get_preview';
+    private isLoading: boolean = false;
 
     private handleClick() {
+        this.isLoading = true;
         // const api = "/api/v1/get_preview";
         const api = 'http://devraspi02.local:8080/api/v1/get_preview?mode=base64';
         this.axios.get(api).then((response) => {
+            this.isLoading = false;
             console.log(response, typeof(response.data));
             // const file = new Blob([response.data], {type: 'image/jpeg'});
             // const file = new Blob([response.data], {type: response.headers['content-type']});
@@ -48,10 +58,16 @@ export default class Preview extends Vue {
         });
     }
 
+    getItem() {
+        return true;
+    }
+
     private handleDetectClick() {
+        this.isLoading = true;
         // const api = "/api/v1/get_preview";
         const api = 'http://devraspi02.local:8080/api/v1/detect_people';
         this.axios.get(api).then((response) => {
+            this.isLoading = false;
             console.log(response, typeof(response.data));
             this.imageSrc = 'data:image/jpg;base64,' + response.data['result_image'];
         });
